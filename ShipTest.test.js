@@ -1,3 +1,5 @@
+//test ship
+
 const ship = require("./Ship")
 let testShip = new ship(2)
 testShip.hit()
@@ -7,6 +9,7 @@ testShip.hit()
     expect(testShip.isSunk()).toBe(true))
 
 
+//test gameboard
 
 const Gameboard = require("./Gameboard")
 let testBoard = new Gameboard()
@@ -15,26 +18,13 @@ testBoard.place(2, 2, 0, true )
 testBoard.place(3, 4, 0, true)
 testBoard.place(4, 6,0,true)
 testBoard.place(5, 8, 0, true)
-testBoard.recieveAttack(0,1)
-testBoard.recieveAttack(0,2)
-testBoard.recieveAttack(0,0)
-testBoard.recieveAttack(5,5)
-testBoard.recieveAttack(2,0)
-testBoard.recieveAttack(2,1)
-testBoard.recieveAttack(4,0)
-testBoard.recieveAttack(4,1)
-testBoard.recieveAttack(4,2)
-testBoard.recieveAttack(6,0)
-testBoard.recieveAttack(6,1)
-testBoard.recieveAttack(6,2)
-testBoard.recieveAttack(6,3)
-testBoard.recieveAttack(8,0)
-testBoard.recieveAttack(8,1)
-testBoard.recieveAttack(8,2)
-testBoard.recieveAttack(8,3)
-testBoard.recieveAttack(8,4)
 
 
+for(let i=0; i<9; i++){
+    for(let x=0; x<6; x++){
+        testBoard.recieveAttack(i,x)
+    }
+}
 
 it('gameBoard records hit', () =>
     expect(testBoard.showSquare(0,2)).toBe('hit')
@@ -46,4 +36,17 @@ it('gameBoard records miss', () =>
 
 it('gameboard recognizes all ships as sunk', () =>
     expect(testBoard.allSunk()).toBe(true)
+)
+
+//test player
+
+const Player = require('./player')
+
+let player1board = new Gameboard()
+let player2board = new Gameboard()
+let player1 = new Player(player1board,player2board)
+player1.makeMove(7,5)
+
+it('player makes a move', () =>
+    expect(player2board.showSquare(7,5)).toBe('miss')
 )
