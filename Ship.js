@@ -9,13 +9,18 @@ class Ship{
         if(this.hits<this.length){
             this.hits++
         }
-        if(this.hits>=this.length){
-            this.sunk = true
-        }
+       
+    }
+
+    showHits(){
+        return this.hits
     }
 
 
     isSunk(){
+        if(this.hits>=this.length){
+            this.sunk = true
+        }
         return this.sunk
     }
 
