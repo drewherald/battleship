@@ -1,7 +1,7 @@
  const ship = require("./Ship")
  const gameboard = require('./Gameboard')
 
- class Player{
+export default class Player{
 
     constructor(playerBoard, enemyBoard){
         this.playerBoard = playerBoard

@@ -38,6 +38,28 @@ it('gameboard recognizes all ships as sunk', () =>
     expect(testBoard.allSunk()).toBe(true)
 )
 
+/*
+let randomBoard = new Gameboard()
+randomBoard.randomlyPopulate()
+
+
+for(let i=0; i<10; i++){
+    for(let x=0; x<10; x++){
+        randomBoard.recieveAttack(i,x)
+    }
+} 
+
+
+for(let i=0; i<10; i++){
+    for(let x=0; x<10; x++){
+        console.log(randomBoard.showSquare(i,x))
+    }
+}
+
+it('gameboard can randomize', () =>
+    expect(randomBoard.allSunk()).toBe(true)
+)
+*/
 //test player
 
 const Player = require('./player')

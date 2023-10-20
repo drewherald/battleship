@@ -1,6 +1,6 @@
 const ship = require("./Ship")
 
-class Gameboard{
+export default class Gameboard{
 
     constructor(){
         this.grid = Array(10).fill('empty').map(()=>Array(10).fill('empty'))
@@ -85,12 +85,45 @@ class Gameboard{
     }
 
     allSunk(){
-        if(this.battleship.isSunk()&&this.carrier.isSunk()&&this.cruiser.isSunk()&&this.destroyer.isSunk()&&this.sub.isSunk()){
+        if(this.battleship.isSunk()&&this.carrier.isSunk()&&this.destroyer.isSunk()&&this.sub.isSunk()&&this.cruiser.isSunk()){
             return true
         }else{
             return false
         }
     }
+/*
+    randomlyPopulate(){
+        for(let i = 2; i<6; i++){
+            let x
+            let y
+            let direction = true
+            let z  = Math.floor(Math.random() * 10)
+            if(z>4){
+                direction = false
+            }
+            let go = true
+            while(go){
+                x = Math.floor(Math.random() * 10)
+                y = Math.floor(Math.random() * 10)
+                for(let a = 0; a<=i; a++){
+                    if(direction){
+                        if(this.grid[x][y+a]!=='empty'){
+                            return 
+                        }
+                    }else{
+                        if(this.grid[x+a][y]!=='empty'){
+                            return
+                        }
+                    }
+                    
+                }
+                go = false
+            }
+           
+            this.place(i, x, y, direction)
+        }
+       
+    } */
 }
 
 module.exports = Gameboard
