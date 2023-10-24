@@ -1,13 +1,45 @@
-.gameBoard-container{
-    width: 520px;
+.gameBoard-container1{
+    width: 600px;
     background: gray;
     overflow-y: auto;
+    margin: 10px;
 }
 
-.gameBoard-container div{
+.gameBoard-container2{
+    width: 600px;
+    background: gray;
+    overflow-y: auto;
+    margin: 10px;
+}
+
+.gameBoard-container1 div{
     width: 50px;
     height: 50px;
     float: left;
     background: lightgray;   
     margin: 5px;
+    
+}
+
+.gameBoard-container1 div:hover{
+    background-color: black;
+}
+
+.gameBoard-container2 div{
+    width: 50px;
+    height: 50px;
+    float: left;
+    background: lightgray;   
+    margin: 5px;
+    
+}
+
+.gameBoard-container2 div:hover{
+    background-color: black;
+}
+
+.flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

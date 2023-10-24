@@ -1,5 +1,5 @@
- const ship = require("./Ship")
- const gameboard = require('./Gameboard')
+import Ship from "./Ship.js"
+import Gameboard from "./Gameboard.js"
 
 export default class Player{
 
@@ -34,4 +34,3 @@ export default class Player{
 
  }
 
- module.exports = Player
