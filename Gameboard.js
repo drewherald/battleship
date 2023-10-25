@@ -3,16 +3,16 @@ export default class Gameboard{
 
     constructor(){
         this.grid = Array(10).fill('empty').map(()=>Array(10).fill('empty'))
-        this.destroyer = new ship(2)
-        this.sub = new ship(3)
-        this.cruiser = new ship(3)
-        this.battleship = new ship(4)
-        this.carrier = new ship(5)
+        this.destroyer = new Ship(2)
+        this.sub = new Ship(3)
+        this.cruiser = new Ship(3)
+        this.battleship = new Ship(4)
+        this.carrier = new Ship(5)
         this.subFill = 0;
     }
 
     place(length, x, y, vertical){
-        let newShip = new ship(length)
+        let newShip = new Ship(length)
 
         if(vertical){
             try{

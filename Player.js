@@ -9,7 +9,7 @@ export default class Player{
     }
 
     makeMove(x,y){
-        if(this.enemyBoard.showSquare(x,y)=='empty'){
+        if(this.enemyBoard.showSquare(x,y)!='hit'){
             this.enemyBoard.recieveAttack(x,y)
         }else{
             console.log('this square has already been attacked!')

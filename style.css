@@ -1,3 +1,9 @@
+*{
+    background-color: navy;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .gameBoard-container1{
     width: 600px;
     background: gray;
@@ -12,34 +18,52 @@
     margin: 10px;
 }
 
-.gameBoard-container1 div{
+.button{
     width: 50px;
     height: 50px;
     float: left;
     background: lightgray;   
     margin: 5px;
-    
 }
 
-.gameBoard-container1 div:hover{
+.button:hover{
     background-color: black;
+    cursor: pointer;
 }
 
-.gameBoard-container2 div{
-    width: 50px;
-    height: 50px;
-    float: left;
-    background: lightgray;   
-    margin: 5px;
-    
-}
-
-.gameBoard-container2 div:hover{
-    background-color: black;
-}
 
 .flex{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+.flex2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hit{
+    width: 50px;
+    height: 50px;
+    float: left;
+    background: red;   
+    margin: 5px;
+    
+}
+
+.miss{
+    width: 50px;
+    height: 50px;
+    float: left;
+    background: blue;   
+    margin: 5px;
+    
+}
+
+#logo{
+    width: 20%;
+    height: auto;
 }
