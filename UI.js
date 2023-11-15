@@ -1,7 +1,7 @@
 import Player from './player.js'
 import Gameboard from './Gameboard.js'
 
-class UI{
+export default class UI{
 
     constructor(){
         this.playerBoard = new Gameboard()
@@ -151,9 +151,3 @@ class UI{
 
 
 
-let UserInterface = new UI()
-
-let create = document.querySelector('#create')
-create.addEventListener('click', (event) => {
-        UserInterface.setupGame()
-},{once : true})
