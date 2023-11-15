@@ -11,7 +11,7 @@ class UI{
         this.p1turn = true
     }
 
-    playGame(){
+    setupGame(){
 
         
         this.playerBoard.place(3, 0,0, true)
@@ -26,34 +26,12 @@ class UI{
         this.comBoard.place(4, 6,6,false)
         this.comBoard.place(5, 9, 3, true)
 
-        let gameNotOver = true
         
         this.build()
+        this.playGame()
         
+       
         
-        
-        while(gameNotOver){
-            if(this.p1turn){
-
-                    this.p1SquareFunctionality()
-                    if(this.comBoard.allSunk() || this.playerBoard.allSunk()){
-                        gameNotOver = false
-                    }
-                    
-                
-            
-            }else{
-                
-                this.p2SquareFuntionality()
-                if(this.comBoard.allSunk() || this.playerBoard.allSunk()){
-                    gameNotOver = false
-                }
-            }
-
-
-        } 
-
-        console.log('game over') 
 
     }
 
@@ -86,64 +64,86 @@ class UI{
             for(let x=0; x<10; x++){
             let square = document.createElement('div')
             square.setAttribute('class', 'button')
-            square.setAttribute('id', `${i}, ${x}`)
+            square.setAttribute('id', `${i+10}, ${x+10}`)
             document.querySelector('.gameBoard-container2').appendChild(square)
-            console.log('building')
             }
         }
     }
 
-    p1SquareFunctionality(){
-        for(let i=0; i<10; i++){
-            for(let x=0; x<10; x++){
-                let square = document.getElementById(`${i}, ${x}`)
-                square.addEventListener('click', (event) => {
-                    console.log(this.comBoard.showSquare(i,x))
-                    this.player.makeMove(i,x)
-                    console.log(this.comBoard.showSquare(i,x))
-                    if(this.comBoard.showSquare(i,x)=='hit'){
-                        square.setAttribute('class', 'hit')
-                    }
-                    if(this.comBoard.showSquare(i,x)=='miss'){
-                        square.setAttribute('class', 'miss')
-                    }
-                    this.p1turn = false
-                    this.removeSquare()
-                },{once : true})          
+    playGame(){
+
+        console.log(this.comBoard.allSunk())
+        console.log(this.playerBoard.allSunk())
+        if(this.p1turn){
+            if(this.comBoard.allSunk() || this.playerBoard.allSunk()){
+                return
             }
-        }
-
-    }
-
-    p2SquareFuntionality(){
-        for(let i=0; i<10; i++){
-            for(let x=0; x<10; x++){
-                let square = document.getElementById(`${i}, ${x}`)
-                square.addEventListener('click', (event) => {
-                    console.log(this.playerBoard.showSquare(i,x))
-                    this.com.makeMove(i,x)
-                    console.log(this.playerBoard.showSquare(i,x))
-                    if(this.playerBoard.showSquare(i,x)=='hit'){
-                        square.setAttribute('class', 'hit')
-                    }
-                    if(this.playerBoard.showSquare(i,x)=='miss'){
-                        square.setAttribute('class', 'miss')
-                    }
-                    this.p1turn = true
-                    this.removeSquare()
-                    },{once : true})          
-            }
-        }
-    }
-
-    removeSquare(){
-        for(let i=0; i<10; i++){
-            for(let x=0; x<10; x++){
-                let square = document.getElementById(`${i}, ${x}`)
-                let replace = square.cloneNode(true);
-                square.parentNode.replaceChild(replace, square);
+            for(let i=0; i<10; i++){
+                for(let x=0; x<10; x++){
+                    let square = document.getElementById(`${i}, ${x}`)
+                    square.addEventListener('click', (event) => {
+                        this.comBoard.recieveAttack(i,x)
+                        this.revealSquare(i,x, this.comBoard, square)
+                        },{once : true}) 
                 }
-    }}
+            }
+        }
+        if(!this.p1turn){
+            if(this.comBoard.allSunk() || this.playerBoard.allSunk()){
+                return
+            }
+            setTimeout(this.enemyPlay(), 1000)
+        }
+    }
+
+   enemyPlay(){
+        let go = true
+        let x = 0
+        let y = 0
+
+        while(go){
+            x = Math.floor(Math.random() * 10)
+            y = Math.floor(Math.random() * 10)
+            if(this.playerBoard.showSquare(x,y)!='miss'){
+                if(this.playerBoard.showSquare(x,y)!='hit'){
+                this.playerBoard.recieveAttack(x, y)
+                go = false
+                this.revealComSquare(x,y, this.playerBoard, document.getElementById(`${x+10}, ${y+10}`))
+                }
+            }
+        }
+        this.p1turn = true
+    } 
+
+  
+
+    revealSquare(x,y, gameBoard, square){
+        let board = gameBoard
+        if(board.showSquare(x,y)=='hit'){
+            square.setAttribute('class', 'hit')
+        }
+        if(board.showSquare(x,y)=='miss'){
+            square.setAttribute('class', 'miss')
+        }
+        this.p1turn = false
+        this.playGame()
+       
+    }
+
+
+    revealComSquare(x,y, gameBoard, square){
+        let board = gameBoard
+        
+        if(board.showSquare(x,y)=='hit'){
+            square.setAttribute('class', 'hit')
+        }
+        if(board.showSquare(x,y)=='miss'){
+            square.setAttribute('class', 'miss')
+        }
+       
+    }
+
+  
 
 
 }
@@ -155,5 +155,5 @@ let UserInterface = new UI()
 
 let create = document.querySelector('#create')
 create.addEventListener('click', (event) => {
-        UserInterface.playGame()
+        UserInterface.setupGame()
 },{once : true})
