@@ -11,10 +11,10 @@ export default class Gameboard{
         this.subFill = 0;
     }
 
-    place(length, x, y, vertical){
+    place(length, x, y, horizontal){
         let newShip = new Ship(length)
 
-        if(vertical){
+        if(horizontal){
             try{
                 if(length===2){
                     for(let i=0; i<length; i++){
@@ -40,7 +40,9 @@ export default class Gameboard{
             }catch(e){
                 console.log(e)
             }
-        }else{
+        }
+        
+        if(!horizontal){
             try{
                 if(length===2){
                     for(let i=0; i<length; i++){
@@ -90,6 +92,27 @@ export default class Gameboard{
             return false
         }
     }
+
+    isBshipHit(){
+        return this.battleship.showHits()
+    }
+
+    isCarSunk(){
+        return this.carrier.isSunk()
+    }
+
+    isCruSunk(){
+        return this.cruiser.isSunk()
+    }
+
+    isDSunk(){
+        return this.destroyer.isSunk()
+    }
+
+    isSSunk(){
+        return this.sub.isSunk()
+    }
+    
 /*
     randomlyPopulate(){
         for(let i = 2; i<6; i++){

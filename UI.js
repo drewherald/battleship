@@ -23,7 +23,7 @@ class UI{
         this.comBoard.place(3, 7,6, true)
         this.comBoard.place(2, 0, 0, false )
         this.comBoard.place(3, 5, 0, true)
-        this.comBoard.place(4, 6,6,false)
+        this.comBoard.place(4, 5,5,false)
         this.comBoard.place(5, 9, 3, true)
 
         
@@ -56,7 +56,6 @@ class UI{
             square.setAttribute('class', 'button')
             square.setAttribute('id', `${i}, ${x}`)
             document.querySelector('.gameBoard-container1').appendChild(square)
-            console.log('building')
             }
         }
     
@@ -72,16 +71,15 @@ class UI{
 
     playGame(){
 
-        console.log(this.comBoard.allSunk())
-        console.log(this.playerBoard.allSunk())
+       
         if(this.p1turn){
-            if(this.comBoard.allSunk() || this.playerBoard.allSunk()){
-                return
-            }
             for(let i=0; i<10; i++){
                 for(let x=0; x<10; x++){
                     let square = document.getElementById(`${i}, ${x}`)
                     square.addEventListener('click', (event) => {
+                        if(this.comBoard.allSunk() || this.playerBoard.allSunk()){
+                            return
+                        }
                         this.comBoard.recieveAttack(i,x)
                         this.revealSquare(i,x, this.comBoard, square)
                         },{once : true}) 
@@ -118,6 +116,8 @@ class UI{
   
 
     revealSquare(x,y, gameBoard, square){
+        console.log(this.comBoard.allSunk())
+        console.log(this.playerBoard.allSunk())
         let board = gameBoard
         if(board.showSquare(x,y)=='hit'){
             square.setAttribute('class', 'hit')
