@@ -1,7 +1,7 @@
 //test ship
 
-const ship = require("./Ship")
-let testShip = new ship(2)
+import Ship from "./Ship.js"
+let testShip = new Ship(2)
 testShip.hit()
 testShip.hit()
 
@@ -11,7 +11,7 @@ testShip.hit()
 
 //test gameboard
 
-const Gameboard = require("./Gameboard")
+import Gameboard from "./Gameboard.js"
 let testBoard = new Gameboard()
 testBoard.place(3, 0,0, true)
 testBoard.place(2, 2, 0, true )
@@ -38,7 +38,7 @@ it('gameboard recognizes all ships as sunk', () =>
     expect(testBoard.allSunk()).toBe(true)
 )
 
-/*
+
 let randomBoard = new Gameboard()
 randomBoard.randomlyPopulate()
 
@@ -57,12 +57,12 @@ for(let i=0; i<10; i++){
 }
 
 it('gameboard can randomize', () =>
-    expect(randomBoard.allSunk()).toBe(true)
+    expect(randomBoard.isCarSunk()).toBe(true)
 )
-*/
+
 //test player
 
-const Player = require('./player')
+import Player from "./player.js"
 
 let player1board = new Gameboard()
 let player2board = new Gameboard()

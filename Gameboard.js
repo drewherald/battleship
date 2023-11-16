@@ -112,40 +112,58 @@ export default class Gameboard{
     isSSunk(){
         return this.sub.isSunk()
     }
+
+    getSubFill(){
+        return this.subFill
+    }
     
-/*
+
     randomlyPopulate(){
+        
         for(let i = 2; i<6; i++){
-            let x
-            let y
+            let x = 0
+            let y = 0
             let direction = true
-            let z  = Math.floor(Math.random() * 10)
-            if(z>4){
-                direction = false
-            }
             let go = true
             while(go){
-                x = Math.floor(Math.random() * 10)
-                y = Math.floor(Math.random() * 10)
-                for(let a = 0; a<=i; a++){
+                x = this.randomNum(i)
+                y = this.randomNum(i)
+                let z  = Math.floor(Math.random() * 10)
+                if(z>4){
+                    direction = false
+                }
+                let check = true
+                
+                for(let a = 0; a<i; a++){
                     if(direction){
                         if(this.grid[x][y+a]!=='empty'){
-                            return 
+                            check = false 
                         }
                     }else{
                         if(this.grid[x+a][y]!=='empty'){
-                            return
+                            check = false
                         }
                     }
                     
                 }
-                go = false
+                if(check){
+                    go = false
+                }
+                
             }
-           
+            console.log(`${i} placed at ${x},${y}`)
             this.place(i, x, y, direction)
         }
        
-    } */
+    } 
+
+    randomNum(size){
+        let random = Math.floor(Math.random() * 10)
+        if(random+size>9){
+            random = 9 - (size-1)
+        }
+        return random
+    }
 }
 
 

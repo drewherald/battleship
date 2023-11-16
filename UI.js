@@ -9,30 +9,29 @@ export default class UI{
         this.com = new Player(this.comBoard, this.playerBoard)
         this.player = new Player(this.playerBoard, this.comBoard)
         this.p1turn = true
+        this.vertical = true
     }
 
     setupGame(){
 
-        
-        this.playerBoard.place(3, 0,0, true)
-        this.playerBoard.place(2, 2, 0, true )
-        this.playerBoard.place(3, 4, 0, true)
-        this.playerBoard.place(4, 6,0,true)
-        this.playerBoard.place(5, 8, 0, true)
+        this.comBoard.randomlyPopulate()
 
-        this.comBoard.place(3, 7,6, true)
-        this.comBoard.place(2, 0, 0, false )
-        this.comBoard.place(3, 5, 0, true)
-        this.comBoard.place(4, 5,5,false)
-        this.comBoard.place(5, 9, 3, true)
+        let place = document.querySelector('.place')
+        place.innerHTML = `Place Your Ships!`
+        let vertical = document.querySelector('#vertical')
+        let horizontal = document.getElementById('hortizontal')
+        vertical.classList.remove('rotate')
+        horizontal.classList.remove('rotate')
+        vertical.addEventListener('click', (event) =>{
+            this.vertical = true
+        })
 
-        
+        horizontal.addEventListener('click', (event) =>{
+            this.vertical = false
+        })
+
         this.build()
-        this.playGame()
-        
-       
-        
-
+        this.placeDestroyer()
     }
 
     build(){
@@ -71,7 +70,12 @@ export default class UI{
 
     playGame(){
 
-       
+       let vertical = document.querySelector('#vertical')
+       let horizontal = document.getElementById('hortizontal')
+       vertical.setAttribute('class', 'none')
+       horizontal.setAttribute('class', 'none')
+       let place = document.querySelector('.place')
+       place.innerHTML = `Battleship`
         if(this.p1turn){
             for(let i=0; i<10; i++){
                 for(let x=0; x<10; x++){
@@ -143,9 +147,265 @@ export default class UI{
        
     }
 
-  
+    removeEL(square){
+        var old_element = square;
+        var new_element = old_element.cloneNode(true);
+        old_element.parentNode.replaceChild(new_element, old_element);
+
+    }
+
+    placeDestroyer(){        
+        for(let i=0; i<10; i++){
+            for(let x=0; x<10; x++){
+            let square = document.getElementById(`${i+10}, ${x+10}`)
+            let square2 = document.getElementById(`${i+11}, ${x+10}`)
+            let square3 = document.getElementById(`${i+10}, ${x+11}`)
+           
+            square.addEventListener('mouseover', (event) => {
+                console.log(this.vertical)
+                square.classList.add('placeShip')
+                if(this.vertical){
+                    square2.classList.add('placeShip')
+                }else{
+                    square3.classList.add('placeShip')
+                }
+            })
+            square.addEventListener('mouseout', (event) => {
+                square.classList.remove('placeShip')
+                if(this.vertical){
+                    square2.classList.remove('placeShip')
+                }else{
+                    square3.classList.remove('placeShip')
+                }
+            })
+            
+            square.addEventListener('click', (event) => {
+                this.playerBoard.place(2, i, x, !this.vertical )
+                console.log(`destroyer placed at ${i}, ${x}`)
+                square.classList.add('placedShip')
+                if(this.vertical){
+                    square2.classList.add('placedShip')
+                }else{
+                    square3.classList.add('placedShip')
+                }
+
+                for(let i=0; i<10; i++){
+                    for(let x=0; x<10; x++){
+                    let square = document.getElementById(`${i+10}, ${x+10}`)
+                    this.removeEL(square)
+                    }}
+                    
+                this.placeSuborCruiser()
+            })
+         }
+        }
+    }
+
+    placeSuborCruiser(){        
+        for(let i=0; i<10; i++){
+            for(let x=0; x<10; x++){
+            let square = document.getElementById(`${i+10}, ${x+10}`)
+            let vsquare2 = document.getElementById(`${i+11}, ${x+10}`)
+            let vsquare3 = document.getElementById(`${i+12}, ${x+10}`)
+            let hsquare2 = document.getElementById(`${i+10}, ${x+11}`)
+            let hsquare3 = document.getElementById(`${i+10}, ${x+12}`)
+           
+            square.addEventListener('mouseover', (event) => {
+                square.classList.add('placeShip')
+                if(this.vertical){
+                    vsquare2.classList.add('placeShip')
+                    vsquare3.classList.add('placeShip')
+                }else{
+                    hsquare2.classList.add('placeShip')
+                    hsquare3.classList.add('placeShip')
+                }
+            })
+            square.addEventListener('mouseout', (event) => {
+                square.classList.remove('placeShip')
+                if(this.vertical){
+                    vsquare2.classList.remove('placeShip')
+                    vsquare3.classList.remove('placeShip')
+                }else{
+                    hsquare2.classList.remove('placeShip')
+                    hsquare3.classList.remove('placeShip')
+                }
+            })
+            
+            square.addEventListener('click', (event) => {
+
+            if(this.playerBoard.getSubFill()==0){
+                this.playerBoard.place(3, i, x, !this.vertical )
+                console.log(`sub placed at ${i}, ${x}`)
+                square.classList.add('placedShip')
+                if(this.vertical){
+                    vsquare2.classList.add('placedShip')
+                    vsquare3.classList.add('placedShip')
+                }else{
+                    hsquare2.classList.add('placedShip')
+                    hsquare3.classList.add('placedShip')
+                }
+            } else{
+                this.playerBoard.place(3, i, x, !this.vertical )
+                console.log(`cruiser placed at ${i}, ${x}`)
+                square.classList.add('placedShip')
+                if(this.vertical){
+                    vsquare2.classList.add('placedShip')
+                    vsquare3.classList.add('placedShip')
+                }else{
+                    hsquare2.classList.add('placedShip')
+                    hsquare3.classList.add('placedShip')
+                }
+
+                for(let i=0; i<10; i++){
+                    for(let x=0; x<10; x++){
+                    let square = document.getElementById(`${i+10}, ${x+10}`)
+                    this.removeEL(square)
+                    }}
+
+                 this.placeBattleship()   
+            }
+               
+            })
+         }
+        }
+    }
+
+    placeBattleship(){        
+        for(let i=0; i<10; i++){
+            for(let x=0; x<10; x++){
+            let square = document.getElementById(`${i+10}, ${x+10}`)
+
+            let vsquare2 = document.getElementById(`${i+11}, ${x+10}`)
+            let vsquare3 = document.getElementById(`${i+12}, ${x+10}`)
+            let vsquare4 = document.getElementById(`${i+13}, ${x+10}`)
+
+            let hsquare2 = document.getElementById(`${i+10}, ${x+11}`)
+            let hsquare3 = document.getElementById(`${i+10}, ${x+12}`)
+            let hsquare4 = document.getElementById(`${i+10}, ${x+13}`)
+
+           
+            square.addEventListener('mouseover', (event) => {
+                square.classList.add('placeShip')
+                if(this.vertical){
+                    vsquare2.classList.add('placeShip')
+                    vsquare3.classList.add('placeShip')
+                    vsquare4.classList.add('placeShip')
+                }else{
+                    hsquare2.classList.add('placeShip')
+                    hsquare3.classList.add('placeShip')
+                    hsquare4.classList.add('placeShip')
+                }
+            })
+            square.addEventListener('mouseout', (event) => {
+                square.classList.remove('placeShip')
+                if(this.vertical){
+                    vsquare2.classList.remove('placeShip')
+                    vsquare3.classList.remove('placeShip')
+                    vsquare4.classList.remove('placeShip')
+                }else{
+                    hsquare2.classList.remove('placeShip')
+                    hsquare3.classList.remove('placeShip')
+                    hsquare4.classList.remove('placeShip')
+                }
+            })
+            
+            square.addEventListener('click', (event) => {
+                this.playerBoard.place(4, i, x, !this.vertical )
+                console.log(`battleship placed at ${i}, ${x}`)
+                square.classList.add('placedShip')
+                if(this.vertical){
+                    vsquare2.classList.add('placedShip')
+                    vsquare3.classList.add('placedShip')
+                    vsquare4.classList.add('placedShip')
+                }else{
+                    hsquare2.classList.add('placedShip')
+                    hsquare3.classList.add('placedShip')
+                    hsquare4.classList.add('placedShip')
+                }
+
+                for(let i=0; i<10; i++){
+                    for(let x=0; x<10; x++){
+                    let square = document.getElementById(`${i+10}, ${x+10}`)
+                    this.removeEL(square)
+                    }}
+                this.placeCarrier()    
+            })
+         }
+        }
+    }
 
 
+    placeCarrier(){        
+        for(let i=0; i<10; i++){
+            for(let x=0; x<10; x++){
+            let square = document.getElementById(`${i+10}, ${x+10}`)
+
+            let vsquare2 = document.getElementById(`${i+11}, ${x+10}`)
+            let vsquare3 = document.getElementById(`${i+12}, ${x+10}`)
+            let vsquare4 = document.getElementById(`${i+13}, ${x+10}`)
+            let vsquare5 = document.getElementById(`${i+14}, ${x+10}`)
+
+            let hsquare2 = document.getElementById(`${i+10}, ${x+11}`)
+            let hsquare3 = document.getElementById(`${i+10}, ${x+12}`)
+            let hsquare4 = document.getElementById(`${i+10}, ${x+13}`)
+            let hsquare5 = document.getElementById(`${i+10}, ${x+14}`)
+
+           
+            square.addEventListener('mouseover', (event) => {
+                square.classList.add('placeShip')
+                if(this.vertical){
+                    vsquare2.classList.add('placeShip')
+                    vsquare3.classList.add('placeShip')
+                    vsquare4.classList.add('placeShip')
+                    vsquare5.classList.add('placeShip')
+                }else{
+                    hsquare2.classList.add('placeShip')
+                    hsquare3.classList.add('placeShip')
+                    hsquare4.classList.add('placeShip')
+                    hsquare5.classList.add('placeShip')
+                }
+            })
+            square.addEventListener('mouseout', (event) => {
+                square.classList.remove('placeShip')
+                if(this.vertical){
+                    vsquare2.classList.remove('placeShip')
+                    vsquare3.classList.remove('placeShip')
+                    vsquare4.classList.remove('placeShip')
+                    vsquare5.classList.remove('placeShip')
+                }else{
+                    hsquare2.classList.remove('placeShip')
+                    hsquare3.classList.remove('placeShip')
+                    hsquare4.classList.remove('placeShip')
+                    hsquare5.classList.remove('placeShip')
+                }
+            })
+            
+            square.addEventListener('click', (event) => {
+                this.playerBoard.place(4, i, x, !this.vertical )
+                console.log(`carrier placed at ${i}, ${x}`)
+                square.classList.add('placedShip')
+                if(this.vertical){
+                    vsquare2.classList.add('placedShip')
+                    vsquare3.classList.add('placedShip')
+                    vsquare4.classList.add('placedShip')
+                    vsquare5.classList.add('placedShip')
+                }else{
+                    hsquare2.classList.add('placedShip')
+                    hsquare3.classList.add('placedShip')
+                    hsquare4.classList.add('placedShip')
+                    hsquare5.classList.add('placedShip')
+                }
+
+                for(let i=0; i<10; i++){
+                    for(let x=0; x<10; x++){
+                    let square = document.getElementById(`${i+10}, ${x+10}`)
+                    this.removeEL(square)
+                    }}
+                this.playGame()
+            })
+         }
+        }
+    }
 }
 
 

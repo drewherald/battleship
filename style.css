@@ -68,6 +68,18 @@
     
 }
 
+.placeShip{
+    background-color: green;
+}
+
+.placeShip:hover{
+    background-color: green;
+}
+
+.placedShip{
+    background-color: black !important;
+}
+
 #logo{
     width: 50%;
     padding-top: 200px;
@@ -89,4 +101,33 @@
 
 #create:hover{
     background-color: lightgray;
+}
+
+.placeBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rotate{
+    display: none;
+}
+
+.buttonBox button{
+    border-radius: 12px;
+    padding: 10px 25px 5px 25px;
+    background-color: white;
+    color: navy;
+    font-size: 15px;
+    border: 0;
+    margin: 0 20px;
+}
+
+
+
+.buttonBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
