@@ -154,6 +154,39 @@ export default class Gameboard{
             console.log(`${i} placed at ${x},${y}`)
             this.place(i, x, y, direction)
         }
+            let i =3
+            let x = 0
+            let y = 0
+            let direction = true
+            let go = true
+            while(go){
+                x = this.randomNum(i)
+                y = this.randomNum(i)
+                let z  = Math.floor(Math.random() * 10)
+                if(z>4){
+                    direction = false
+                }
+                let check = true
+                
+                for(let a = 0; a<i; a++){
+                    if(direction){
+                        if(this.grid[x][y+a]!=='empty'){
+                            check = false 
+                        }
+                    }else{
+                        if(this.grid[x+a][y]!=='empty'){
+                            check = false
+                        }
+                    }
+                    
+                }
+                if(check){
+                    go = false
+                }
+                
+            }
+            console.log(`${i} placed at ${x},${y}`)
+            this.place(i, x, y, direction)
        
     } 
 
