@@ -82,7 +82,16 @@ export default class UI{
                     let square = document.getElementById(`${i}, ${x}`)
                     square.addEventListener('click', (event) => {
                         if(this.comBoard.allSunk() || this.playerBoard.allSunk()){
-                            return
+                            if(this.comBoard.allSunk()){
+                                let place = document.querySelector('.place')
+                                place.innerHTML = `Player Wins`
+                                return
+                            }
+                            if(this.playerBoard.allSunk()){
+                                let place = document.querySelector('.place')
+                                place.innerHTML = `Com Wins`
+                                return
+                            }
                         }
                         this.comBoard.recieveAttack(i,x)
                         this.revealSquare(i,x, this.comBoard, square)
@@ -91,10 +100,17 @@ export default class UI{
             }
         }
         if(!this.p1turn){
-            if(this.comBoard.allSunk() || this.playerBoard.allSunk()){
+            if(this.comBoard.allSunk()){
+                let place = document.querySelector('.place')
+                place.innerHTML = `Player Wins`
                 return
             }
-            setTimeout(this.enemyPlay(), 1000)
+            if(this.playerBoard.allSunk()){
+                let place = document.querySelector('.place')
+                place.innerHTML = `Com Wins`
+                return
+            }
+            setTimeout(this.enemyPlay(), 2000)
         }
     }
 
