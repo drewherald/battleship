@@ -1,7 +1,7 @@
 import Ship from "./Ship.js"
 import Gameboard from "./Gameboard.js"
 
-export default class Player{
+export default class Gameplayer{
 
     constructor(playerBoard, enemyBoard){
         this.playerBoard = playerBoard

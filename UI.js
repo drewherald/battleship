@@ -1,4 +1,4 @@
-import Player from './Player.js'
+import Gameplayer from './Gameplayer.js'
 import Gameboard from './Gameboard.js'
 
 export default class UI{
@@ -6,8 +6,8 @@ export default class UI{
     constructor(){
         this.playerBoard = new Gameboard()
         this.comBoard = new Gameboard()
-        this.com = new Player(this.comBoard, this.playerBoard)
-        this.player = new Player(this.playerBoard, this.comBoard)
+        this.com = new Gameplayer(this.comBoard, this.playerBoard)
+        this.player = new Gameplayer(this.playerBoard, this.comBoard)
         this.p1turn = true
         this.vertical = true
     }
