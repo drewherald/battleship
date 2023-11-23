@@ -1,4 +1,4 @@
-import Player from './player.js'
+import Player from './Player.js'
 import Gameboard from './Gameboard.js'
 
 export default class UI{
